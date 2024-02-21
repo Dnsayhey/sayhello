@@ -2,7 +2,7 @@
 {% from 'bootstrap4/form.html' import render_form %}
 
 {% block content %}
-<div>
+<div class="hello-form">
     {{ render_form(form) }}
 </div>
 <h5>{{ messages|length }} messages
@@ -17,8 +17,9 @@
             <h5 class="mb-1 text-success">{{ message.name }}
                 <small class="text-muted"> #{{ loop.revindex }}</small>
             </h5>
-            <small>
-                {{ message.timestamp.strftime("%Y/%m/%d %H:%M") }}
+            <small data-toggle="tooltip" data-placement="top" data-delay="500"
+                data-timestamp="{{ message.timestamp.strftime('%Y-%m-%dT%H:%M:%SZ') }}">
+                {{ moment(message.timestamp).fromNow(refresh=True) }}
             </small>
         </div>
         <p class="mb-1">{{ message.body }}</p>
@@ -26,3 +27,9 @@
     {% endfor %}
 </div>
 {% endblock content %}
+{% block script %}
+    {{ super() }}
+    {{ moment.include_moment(local_js=url_for('static', filename='js/moment-with-locales.min.js')) }}
+    {{ moment.locale(auto_detect=True) }}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}
