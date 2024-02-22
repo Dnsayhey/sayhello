@@ -25,7 +25,7 @@ dependencies = [
     "WTForms==3.1.2",
     "gunicorn>=21.2.0",
 ]
-requires-python = "==3.11.*"
+requires-python = ">=3.8"
 readme = "README.md"
 license = {text = "MIT"}
 
